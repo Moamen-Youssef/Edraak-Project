@@ -29,7 +29,7 @@ function HomePage() {
         </p>
       </Text>
       <img
-        src='../public/cloud-data.png'
+        src='/Edraak-Project/cloud-data.png'
         alt='software'
         className='h-[45vh] w-[100%] sm:w-[40rem] sm:h-[30vh] md:w-[55%] lg:w-[100%] lg:h-[54vh]'
       />

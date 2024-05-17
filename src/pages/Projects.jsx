@@ -45,15 +45,15 @@ export const NavigationBox = styled.div`
 `;
 function Projects() {
   const ProjectsFile = [
-    { imgSrc: '/project-1.jpg', title: 'منصة ديما للصدقة اليومية', id: '1' },
-    { imgSrc: '/project-2.jpg', title: 'إمارة منطقة الرياض', id: '2' },
-    { imgSrc: '/project-3.jpg', title: 'منصة التصديق الرقمي', id: '3' },
+    { imgSrc: '/Edraak-Project/project-1.jpg', title: 'منصة ديما للصدقة اليومية', id: '1' },
+    { imgSrc: '/Edraak-Project/project-2.jpg', title: 'إمارة منطقة الرياض', id: '2' },
+    { imgSrc: '/Edraak-Project/project-3.jpg', title: 'منصة التصديق الرقمي', id: '3' },
     {
-      imgSrc: '/project-4.jpg',
+      imgSrc: '/Edraak-Project/project-4.jpg',
       title: 'تحليل وإخراج بيانات الأسر المنتجة',
       id: '4',
     },
-    { imgSrc: '/project-5.jpg', title: 'تطبيق جامعة أم القرى', id: '5' },
+    { imgSrc: '/Edraak-Project/project-5.jpg', title: 'تطبيق جامعة أم القرى', id: '5' },
   ];
 
   const [currentActiveProduct, setCurrentActiveProduct] = useState(

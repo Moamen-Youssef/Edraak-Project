@@ -3,9 +3,7 @@ import GlobalStyles from '../styles/GlobalStyles';
 import MainNav from './MainNav';
 import { Outlet, useLocation } from 'react-router-dom';
 import Logo from './Logo';
-import Alerts from '../pages/Alerts';
 import Socials from './Socials';
-import { Container } from 'postcss';
 
 const StyledAppLayout = styled.div`
   display: grid;
