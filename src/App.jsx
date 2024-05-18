@@ -6,6 +6,7 @@ import Projects from './pages/Projects';
 import Partners from './pages/Partners';
 import Contact from './pages/Contact';
 import AppLayout from './ui/AppLayout';
+// App
 function App() {
   return (
     <BrowserRouter basename='/Edraak-Project'>
