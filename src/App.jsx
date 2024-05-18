@@ -8,7 +8,7 @@ import Contact from './pages/Contact';
 import AppLayout from './ui/AppLayout';
 function App() {
   return (
-    <BrowserRouter basename='/Edraak-Project'>
+    <BrowserRouter basename='Edraak-Project'>
       <Routes>
         <Route element={<AppLayout />}>
           <Route index element={<Navigate replace to='/home' />} />
