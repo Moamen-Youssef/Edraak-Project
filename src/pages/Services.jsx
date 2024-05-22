@@ -1,11 +1,17 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import FlexBox from '../ui/FlexBox';
-import { BsFillBarChartFill, BsReverseLayoutTextWindowReverse } from 'react-icons/bs';
-import { RiVerifiedBadgeLine } from 'react-icons/ri';
-import { IoLayersSharp } from 'react-icons/io5';
-import { FaHouseUser } from 'react-icons/fa';
-import { LuUsers } from 'react-icons/lu';
 import Description from '../ui/Description';
+import { useContext } from 'react';
+import { LanguageContextAPI } from '../contexts/LanguageContext';
+import { appContent } from '../content/appContent';
+
+const ServicesContainer = styled.div`
+  ${(props) =>
+    props.lang === 'en' &&
+    css`
+      direction: ltr;
+    `}
+`;
 const CardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -38,7 +44,6 @@ const Card = styled.div`
   & svg {
     width: 3rem;
     height: 3rem;
-    color: #08f8f8 ;
   }
   &:hover {
     transition: all 0.3s ease;
@@ -48,7 +53,7 @@ const Card = styled.div`
     }
     h4 {
       top: 8%;
-      font-size: larger;
+      font-size: 12px;
       width: 100%;
       text-align: center;
     }
@@ -66,7 +71,7 @@ const Title = styled.h4`
   position: absolute;
   width: 100%;
   text-align: center;
-  top: 70%;
+  top: 74%;
   left: 50%;
   transform: translate(-50%, -50%);
   transition: all 0.3s ease;
@@ -78,74 +83,35 @@ const Text = styled.p`
   transition: ease 1s;
   font-size: 11px;
   font-weight: 500;
+  padding: 1rem;
   width: 15rem;
   height: 14rem;
-  padding: 1rem;
+  margin-bottom: 0;
 `;
 
-
 function Services() {
+  const { appLang } = useContext(LanguageContextAPI);
+  const { servicesContent } = appContent();
   return (
-    <FlexBox>
-      
-       <Description>
-       <h1>خدماتنا</h1>
-        <h4>نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا</h4>
-        <p>نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا</p>
-       </Description>
+    <ServicesContainer lang={appLang}>
+      <FlexBox>
+        <Description>
+          <h1>{servicesContent.title[appLang]}</h1>
+          <h4>{servicesContent.description.title[appLang]}</h4>
+          <p>{servicesContent.description.text[appLang]}</p>
+        </Description>
 
-      <CardsContainer>
-        <Card>
-          <Text>
-            نص تخيلي نص تخيلي نص تخيلي نص تخيلي نص تخيلي نصتخيلي نصتخيلي نص
-            تخيلي نص تخيلي نص تخيلي نص تخيلي نص
-          </Text>
-          <BsFillBarChartFill color='#9f6bd1' />
-          <Title>تحليل البيانات</Title>
-        </Card>
-        <Card>
-          <Text>
-            نص تخيلي نص تخيلي نص تخيلي نص تخيلي نص تخيلي نصتخيلي نصتخيلي نص
-            تخيلي نص تخيلي نص تخيلي نص تخيلي نص
-          </Text>
-          <RiVerifiedBadgeLine color='#bef1be' />
-          <Title>خدمات الجودة</Title>
-        </Card>
-        <Card>
-          <Text>
-            نص تخيلي نص تخيلي نص تخيلي نص تخيلي نص تخيلي نصتخيلي نصتخيلي نص
-            تخيلي نص تخيلي نص تخيلي نص تخيلي نص
-          </Text>
-          <IoLayersSharp color='#367cff' />
-          <Title>تطوير البرمجيات</Title>
-        </Card>
-        <Card>
-          <Text>
-            نص تخيلي نص تخيلي نص تخيلي نص تخيلي نص تخيلي نصتخيلي نصتخيلي نص
-            تخيلي نص تخيلي نص تخيلي نص تخيلي نص
-          </Text>
-          <FaHouseUser color='#eeaa2c' />
-          <Title>الموارد البشرية</Title>
-        </Card>
-        <Card>
-          <Text>
-            نص تخيلي نص تخيلي نص تخيلي نص تخيلي نص تخيلي نصتخيلي نصتخيلي نص
-            تخيلي نص تخيلي نص تخيلي نص تخيلي نص
-          </Text>
-          <LuUsers color='#e7e754'/>
-          <Title>خدمات استشارية</Title>
-        </Card>
-        <Card>
-          <Text>
-            نص تخيلي نص تخيلي نص تخيلي نص تخيلي نص تخيلي نصتخيلي نصتخيلي نص
-            تخيلي نص تخيلي نص تخيلي نص تخيلي نص
-          </Text>
-          <BsReverseLayoutTextWindowReverse color='' />
-          <Title> واجهات المستخدم</Title>
-        </Card>
-      </CardsContainer>
-   
-    </FlexBox>
+        <CardsContainer>
+          {servicesContent.services.map((service) => (
+            <Card key={service.serviceDescription.ar}>
+              <Text>{service.serviceDescription[appLang]}</Text>
+              {<service.serviceIcon.icon color={service.serviceIcon.color} />}
+              <Title>{service.serviceName[appLang]}</Title>
+            </Card>
+          ))}
+        </CardsContainer>
+      </FlexBox>
+    </ServicesContainer>
   );
 }
 export default Services;

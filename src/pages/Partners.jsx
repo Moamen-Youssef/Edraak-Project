@@ -1,6 +1,17 @@
 import styled, { css } from 'styled-components';
 import FlexBox from '../ui/FlexBox';
 import Description from '../ui/Description';
+import { appContent } from '../content/appContent';
+import { useContext } from 'react';
+import { LanguageContextAPI } from '../contexts/LanguageContext';
+
+const Container = styled.div`
+  ${(props) =>
+    props.lang === 'en' &&
+    css`
+      direction: ltr;
+    `}
+`;
 const PartnersBox = styled.div`
   min-width: 30rem;
   display: flex;
@@ -38,57 +49,64 @@ const Card = styled.div`
     right: ${props?.position?.right};
     left: ${props?.position?.left};
     bottom: ${props?.position?.bottom};
-    transform: translate(${props?.position?.top},${-props?.position?.right});
-    transform: translate(${-props?.position?.left},${-props?.position?.top});
-    transform: translate(${-props?.position?.bottom},${-props?.position?.left});
+    transform: translate(${props?.position?.top}, ${-props?.position?.right});
+    transform: translate(${-props?.position?.left}, ${-props?.position?.top});
+    transform: translate(
+      ${-props?.position?.bottom},
+      ${-props?.position?.left}
+    );
   `}
 `;
 
 function Partners() {
+  const { appLang } = useContext(LanguageContextAPI);
+  const { partnersContent } = appContent();
+  const { title, description } = partnersContent;
   return (
-    <FlexBox>
-       <Description>
-       <h1>شركائنا</h1>
-        <h4>نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا</h4>
-        <p>نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا</p>
-       </Description>
-
-      <PartnersBox>
-        <Card type='horizontal' position={{ top: '4%' , right: "33%"}}>
-          Box 1
-        </Card>
-        <Card type='horizontal' position={{ top: '4%' , left: "19%"}}>
-          Box 2
-        </Card>
-        <Card type='horizontal-md' position={{ top: '20%' , right: "37%"}}>
-          Box 3
-        </Card>
-        <Card type='horizontal' position={{ top: '21%' , left: "1%"}}>
-          Box 4
-        </Card>
-        <Card type='horizontal' position={{ top: '36%' , left: "1%"}}>
-          Box 5
-        </Card>
-        <Card type='horizontal' position={{ top: '52%' , left: "1%"}}>
-          Box 6
-        </Card>
-        <Card type='horizontal' position={{ top: '40%' , left: "30%"}}>
-          Box 7
-        </Card>
-        <Card type='horizontal' position={{ top: '21%' , right: "11%"}}>
-          Box 8
-        </Card>
-        <Card type='horizontal' position={{ bottom: '29%' , right: "10%"}}>
-          Box 9
-        </Card>
-        <Card type='horizontal' position={{ top: '40%' , right: "19%"}}>
-          Box 10
-        </Card>
-        <Card type='horizontal-md' position={{ bottom: '27%' , left: "28%"}}>
-          Box 11
-        </Card>
-      </PartnersBox>
-    </FlexBox>
+    <Container lang={appLang}>
+      <FlexBox>
+        <Description >
+          <h1>{title[appLang]}</h1>
+          <h4>{description.title[appLang]}</h4>
+          <p>{description.text[appLang]}</p>
+        </Description>
+        <PartnersBox>
+          <Card type='horizontal' position={{ top: '4%', right: '33%' }}>
+            Box 1
+          </Card>
+          <Card type='horizontal' position={{ top: '4%', left: '19%' }}>
+            Box 2
+          </Card>
+          <Card type='horizontal-md' position={{ top: '20%', right: '37%' }}>
+            Box 3
+          </Card>
+          <Card type='horizontal' position={{ top: '21%', left: '1%' }}>
+            Box 4
+          </Card>
+          <Card type='horizontal' position={{ top: '36%', left: '1%' }}>
+            Box 5
+          </Card>
+          <Card type='horizontal' position={{ top: '52%', left: '1%' }}>
+            Box 6
+          </Card>
+          <Card type='horizontal' position={{ top: '40%', left: '30%' }}>
+            Box 7
+          </Card>
+          <Card type='horizontal' position={{ top: '21%', right: '11%' }}>
+            Box 8
+          </Card>
+          <Card type='horizontal' position={{ bottom: '29%', right: '10%' }}>
+            Box 9
+          </Card>
+          <Card type='horizontal' position={{ top: '40%', right: '19%' }}>
+            Box 10
+          </Card>
+          <Card type='horizontal-md' position={{ bottom: '27%', left: '28%' }}>
+            Box 11
+          </Card>
+        </PartnersBox>
+      </FlexBox>
+    </Container>
   );
 }
 

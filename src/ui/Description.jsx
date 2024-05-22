@@ -8,6 +8,9 @@ const StyledDescription = styled.div`
   margin: auto;
   padding: 0.5rem;
 
+  ${props => props.lang === "en" && css`
+    direction: ltr;
+  `}
   & h1 {
     color: var(--color-brand-200);
     font-size: 3rem;
@@ -26,9 +29,9 @@ const StyledDescription = styled.div`
     }
   }
 `;
-function Description({ children, className }) {
+function Description({ children, className,lang }) {
   return (
-    <StyledDescription className={`${className} w-[95%]  md:w-[80%] lg:w-[50%] flex`}>
+    <StyledDescription lang={lang} className={`${className} w-[95%]  md:w-[80%] lg:w-[50%] flex`}>
       {children}
     </StyledDescription>
   );

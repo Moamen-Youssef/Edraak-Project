@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -8,6 +8,9 @@ import FlexBox from '../ui/FlexBox';
 import Description from '../ui/Description';
 import styled, { css } from 'styled-components';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { appContent } from '../content/appContent';
+import { LanguageContextAPI } from '../contexts/LanguageContext';
+import { useProjectsNav } from '../hooks/useProjectsNav';
 
 const BASE_URL = window.location.origin;
 
@@ -44,64 +47,26 @@ export const NavigationBox = styled.div`
   }
 `;
 function Projects() {
-  const ProjectsFile = [
-    { imgSrc: '/Edraak-Project/project-1.jpg', title: 'منصة ديما للصدقة اليومية', id: '1' },
-    { imgSrc: '/Edraak-Project/project-2.jpg', title: 'إمارة منطقة الرياض', id: '2' },
-    { imgSrc: '/Edraak-Project/project-3.jpg', title: 'منصة التصديق الرقمي', id: '3' },
-    {
-      imgSrc: '/Edraak-Project/project-4.jpg',
-      title: 'تحليل وإخراج بيانات الأسر المنتجة',
-      id: '4',
-    },
-    { imgSrc: '/Edraak-Project/project-5.jpg', title: 'تطبيق جامعة أم القرى', id: '5' },
-  ];
-
-  const [currentActiveProduct, setCurrentActiveProduct] = useState(
-    ProjectsFile[1]
-  );
-
+  const { projectsContent } = appContent();
+  const { projects, title, description } = projectsContent;
   const swiperRef = useRef(null);
+  const { appLang } = useContext(LanguageContextAPI);
 
-  function getActiveProduct() {
-    // get the active img
-    const activeImgSrc = swiperRef?.current?.swiper?.visibleSlides
-      .filter((p) => p.className.includes('next'))[0]
-      .firstChild.currentSrc.replace(BASE_URL, '');
-
-    // search for it in the ProjectsFile
-    const activeProduct = ProjectsFile.filter(
-      (product) => product.imgSrc === activeImgSrc
-    );
-    setCurrentActiveProduct(...activeProduct);
-  }
-
-  const handleClickLeftArrow = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slideNext();
-      getActiveProduct();
-    }
-  };
-
-  const handleClickRightArrow = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slidePrev();
-      getActiveProduct();
-    }
-  };
+  const { handleClickLeftArrow, handleClickRightArrow, currentActiveProject } =
+    useProjectsNav({
+      arrayOfProjects: projects,
+      ref: swiperRef,
+      url: BASE_URL,
+    });
 
   return (
     <FlexBox>
-      <Description className='lg:flex'>
-        <h1>أعمالنا</h1>
-        <h4>نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا</h4>
-        <p>
-          نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص
-          تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص
-          تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص تخيلي للبيانات هنا نص
-          تخيلي للبيانات هنا
-        </p>
+      <Description className='lg:flex' lang={appLang}>
+        <h1>{title[appLang]}</h1>
+        <h4>{description.title[appLang]}</h4>
+        <p>{description.text[appLang]}</p>
       </Description>
-      <div className='w-[33rem] md:w-[51rem] sm:w-[51.3rem] lg:w-[51rem] flex flex-col gap-[2rem] justify-center items-center'>
+      <div className='w-[32.2rem] md:w-[51rem] sm:w-[50.3rem] lg:w-[51rem] flex flex-col gap-[2rem] justify-center items-center'>
         <Swiper
           effect={'coverflow'}
           coverflowEffect={{
@@ -118,7 +83,7 @@ function Projects() {
           modules={[Navigation, EffectCoverflow]}
           className='mySwiper'
         >
-          {ProjectsFile.map((product) => (
+          {projects.map((product) => (
             <SwiperSlide key={product.id}>
               <img src={product.imgSrc} alt='project' />
             </SwiperSlide>
@@ -126,7 +91,7 @@ function Projects() {
         </Swiper>
         <NavigationBox>
           <FaChevronRight onClick={handleClickRightArrow} />
-          <h1>{currentActiveProduct?.title}</h1>
+          <h1>{currentActiveProject?.title[appLang]}</h1>
           <FaChevronLeft onClick={handleClickLeftArrow} />
         </NavigationBox>
       </div>
